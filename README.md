@@ -117,11 +117,45 @@ The manual test (`tests/manual_test.py`) demonstrates the full lifecycle of inte
    python -m tests.manual_test
    ```
 
-#### **Expected Output**
+#### **Output Example**
 You will see output similar to the following:
 ```
-Created Job ID: 123e4567-e89b-12d3-a456-426614174000
+% python -m tests.manual_test
+INFO:httpx:HTTP Request: POST http://127.0.0.1:8000/jobs "HTTP/1.1 200 OK"
+Created Job ID: da942d76-62b2-466f-9065-d5e0446aac71
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8000/status/da942d76-62b2-466f-9065-d5e0446aac71 "HTTP/1.1 200 OK"
+INFO:client.client:Job da942d76-62b2-466f-9065-d5e0446aac71 status: pending
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8000/status/da942d76-62b2-466f-9065-d5e0446aac71 "HTTP/1.1 200 OK"
+INFO:client.client:Job da942d76-62b2-466f-9065-d5e0446aac71 status: pending
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8000/status/da942d76-62b2-466f-9065-d5e0446aac71 "HTTP/1.1 200 OK"
+INFO:client.client:Job da942d76-62b2-466f-9065-d5e0446aac71 status: pending
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8000/status/da942d76-62b2-466f-9065-d5e0446aac71 "HTTP/1.1 200 OK"
+INFO:client.client:Job da942d76-62b2-466f-9065-d5e0446aac71 status: pending
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8000/status/da942d76-62b2-466f-9065-d5e0446aac71 "HTTP/1.1 200 OK"
+INFO:client.client:Job da942d76-62b2-466f-9065-d5e0446aac71 status: pending
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8000/status/da942d76-62b2-466f-9065-d5e0446aac71 "HTTP/1.1 200 OK"
+INFO:client.client:Job da942d76-62b2-466f-9065-d5e0446aac71 status: pending
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8000/status/da942d76-62b2-466f-9065-d5e0446aac71 "HTTP/1.1 200 OK"
+INFO:client.client:Job da942d76-62b2-466f-9065-d5e0446aac71 status: pending
+INFO:httpx:HTTP Request: GET http://127.0.0.1:8000/status/da942d76-62b2-466f-9065-d5e0446aac71 "HTTP/1.1 200 OK"
+INFO:client.client:Job da942d76-62b2-466f-9065-d5e0446aac71 status: completed
 Job Status: completed
+```
+
+server logs:
+```
+INFO:     127.0.0.1:55277 - "GET /status/0a452c41-8415-46f5-9cf6-d0a8c1fd5228 HTTP/1.1" 200 OK
+INFO:server.app:Created job da942d76-62b2-466f-9065-d5e0446aac71 with completion time 23.09 seconds.
+INFO:     127.0.0.1:55408 - "POST /jobs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55409 - "GET /status/da942d76-62b2-466f-9065-d5e0446aac71 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55412 - "GET /status/da942d76-62b2-466f-9065-d5e0446aac71 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55414 - "GET /status/da942d76-62b2-466f-9065-d5e0446aac71 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55420 - "GET /status/da942d76-62b2-466f-9065-d5e0446aac71 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55426 - "GET /status/da942d76-62b2-466f-9065-d5e0446aac71 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55430 - "GET /status/da942d76-62b2-466f-9065-d5e0446aac71 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55436 - "GET /status/da942d76-62b2-466f-9065-d5e0446aac71 HTTP/1.1" 200 OK
+INFO:server.app:Job da942d76-62b2-466f-9065-d5e0446aac71 completed.
+INFO:     127.0.0.1:55451 - "GET /status/da942d76-62b2-466f-9065-d5e0446aac71 HTTP/1.1" 200 OK
 ```
 
 ---
@@ -141,13 +175,38 @@ pytest tests/auto_test.py --log-cli-level=INFO -v
 - **Wait for Completion**:
   - Ensures the client can poll the server until the job completes or fails, respecting the timeout.
 
-#### **Expected Output**
+#### **Output Example**
 If all tests pass, the output will look like this:
 ```
-tests/auto_test.py::test_create_and_wait INFO     Using base URL: http://127.0.0.1:8000
-tests/auto_test.py::test_create_and_wait INFO     Created Job ID: abc123
-tests/auto_test.py::test_create_and_wait INFO     Final Job Status: completed
-PASSED
+% pytest tests/auto_test.py --log-cli-level=INFO
+================================= test session starts =================================
+platform darwin -- Python 3.11.4, pytest-7.4.0, pluggy-1.0.0
+rootdir: /Users/hl.zuo/Documents/Projects/Notes-ipynb/interview/heygen/video_translation_backend_simulator
+plugins: anyio-3.5.0
+collected 1 item                                                                      
+
+tests/auto_test.py::test_create_and_wait 
+------------------------------------ live log call ------------------------------------
+INFO     server.app:app.py:48 Created job 62da1938-0c60-4003-82ba-9be18029b6f4 with completion time 17.09 seconds.
+INFO     httpx:_client.py:1038 HTTP Request: POST http://127.0.0.1:8000/jobs "HTTP/1.1 200 OK"
+INFO     httpx:_client.py:1038 HTTP Request: GET http://127.0.0.1:8000/status/62da1938-0c60-4003-82ba-9be18029b6f4 "HTTP/1.1 200 OK"
+INFO     client.client:client.py:61 Job 62da1938-0c60-4003-82ba-9be18029b6f4 status: pending
+INFO     httpx:_client.py:1038 HTTP Request: GET http://127.0.0.1:8000/status/62da1938-0c60-4003-82ba-9be18029b6f4 "HTTP/1.1 200 OK"
+INFO     client.client:client.py:61 Job 62da1938-0c60-4003-82ba-9be18029b6f4 status: pending
+INFO     httpx:_client.py:1038 HTTP Request: GET http://127.0.0.1:8000/status/62da1938-0c60-4003-82ba-9be18029b6f4 "HTTP/1.1 200 OK"
+INFO     client.client:client.py:61 Job 62da1938-0c60-4003-82ba-9be18029b6f4 status: pending
+INFO     httpx:_client.py:1038 HTTP Request: GET http://127.0.0.1:8000/status/62da1938-0c60-4003-82ba-9be18029b6f4 "HTTP/1.1 200 OK"
+INFO     client.client:client.py:61 Job 62da1938-0c60-4003-82ba-9be18029b6f4 status: pending
+INFO     httpx:_client.py:1038 HTTP Request: GET http://127.0.0.1:8000/status/62da1938-0c60-4003-82ba-9be18029b6f4 "HTTP/1.1 200 OK"
+INFO     client.client:client.py:61 Job 62da1938-0c60-4003-82ba-9be18029b6f4 status: pending
+INFO     httpx:_client.py:1038 HTTP Request: GET http://127.0.0.1:8000/status/62da1938-0c60-4003-82ba-9be18029b6f4 "HTTP/1.1 200 OK"
+INFO     client.client:client.py:61 Job 62da1938-0c60-4003-82ba-9be18029b6f4 status: pending
+INFO     server.app:app.py:69 Job 62da1938-0c60-4003-82ba-9be18029b6f4 completed.
+INFO     httpx:_client.py:1038 HTTP Request: GET http://127.0.0.1:8000/status/62da1938-0c60-4003-82ba-9be18029b6f4 "HTTP/1.1 200 OK"
+INFO     client.client:client.py:61 Job 62da1938-0c60-4003-82ba-9be18029b6f4 status: completed
+PASSED                                                                                                                                                       [100%]
+
+======================================================================== 1 passed in 22.19s ========================================================================
 ```
 
 ---
