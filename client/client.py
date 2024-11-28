@@ -2,7 +2,7 @@ import httpx
 import time
 from typing import Callable, Optional
 import logging
-from config import INITIAL_INTERVAL, MAX_INTERVAL, BACKOFF_FACTOR  # 从配置文件导入
+from config import INITIAL_INTERVAL, MAX_INTERVAL, BACKOFF_FACTOR 
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

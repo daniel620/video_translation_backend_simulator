@@ -5,7 +5,7 @@ from enum import Enum
 import uuid
 from typing import Dict
 import logging
-from config import MIN_DELAY, MAX_DELAY  # 引入配置文件中的参数
+from config import MIN_DELAY, MAX_DELAY  
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,6 +24,18 @@ class JobTracker:
         self.status = JobStatus.PENDING
 
 class TranslationServer:
+    """
+    A server to simulate video translation jobs with random completion times.
+    Attributes:
+        jobs (Dict[str, JobTracker]): A dictionary to track translation jobs.
+        min_delay (int): Minimum delay for job completion.
+        max_delay (int): Maximum delay for job completion.
+    Methods:
+        create_job() -> str:
+            Create a new translation job with a random completion time.
+        get_job_status(job_id: str) -> JobStatus:
+            Get the current status of a job by its ID.
+    """
     def __init__(self, min_delay: int = MIN_DELAY, max_delay: int = MAX_DELAY):
         self.jobs: Dict[str, JobTracker] = {}
         self.min_delay = min_delay
@@ -60,7 +72,7 @@ class TranslationServer:
         return job.status
 
 app = FastAPI()
-server = TranslationServer()  # 使用配置文件中的延迟范围
+server = TranslationServer() 
 
 @app.post("/jobs")
 async def create_job():

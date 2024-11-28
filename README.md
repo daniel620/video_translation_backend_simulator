@@ -114,7 +114,7 @@ The manual test (`tests/manual_test.py`) demonstrates the full lifecycle of inte
    ```
 2. Run the manual test script:
    ```bash
-   python tests/manual_test.py
+   python -m tests.manual_test
    ```
 
 #### **Expected Output**
